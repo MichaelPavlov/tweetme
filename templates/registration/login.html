@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-sm-6 col-sm-offset-3 text-center">
+        <h1>Login</h1>
+        {% if form.errors %}
+            <p>Username and password pair doesn't match our records.</p>
+        {% endif %}
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed, please login with an account that have
+                    access.</p>
+            {% else %}
+                <p>Login to see this page.</p>
+            {% endif %}
+        {% endif %}
+        <form method="post" action="{% url 'auth:login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn btn-default">Login</button>
+
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("form input").addClass("form-control")
+        })
+    </script>
+{% endblock %}

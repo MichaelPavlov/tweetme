@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% if request.GET.q %}
+                <p class="lead">Results for {{ request.GET.q }}</p>
+                <hr/>
+            {% endif %}
+        </div>
+        <div class="col-sm-9">
+            <h1>Tweets</h1>
+            <hr/>
+            <div id="tweet-container" data-url="/api/search/"></div>
+            <a href="#" id="loadmore">Load more Tweets</a>
+        </div>
+        <div class="col-sm-3">
+            <h2>Users</h2>
+            <hr/>
+            {% for user in users %}
+                <a href="{% url 'profile:detail' username=user.username %}">{{ user.username }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            loadTweetContainer("tweet-container")
+        })
+    </script>
+{% endblock %}

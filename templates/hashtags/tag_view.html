@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>{{ object.tag }}</h1>
+            <hr/>
+            <br/>
+        </div>
+        <div class="col-sm-9">
+            {% for tweet in object.get_tweets %}
+                {{ tweet.content }}<br/>
+            {% endfor %}
+
+        </div>
+        <div id="tweet-container" data-url="/api/tweet/">
+
+        </div>
+        <a href="#" id="loadmore">Load Moar Twats</a>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            loadTweetContainer("tweet-container")
+        })
+    </script>
+{% endblock %}
